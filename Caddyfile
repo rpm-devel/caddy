@@ -1,0 +1,17 @@
+# Default Caddyfile for Caddy v2
+# See https://caddyserver.com/docs/caddyfile for documentation.
+
+# Global options block (uncomment and set as needed)
+# {
+#   email admin@example.com
+#   acme_ca https://acme-v02.api.letsencrypt.org/directory
+# }
+
+# Example: static file server on port 8080 (no HTTPS, no root needed)
+:8080 {
+    root * /var/lib/caddy/www
+    file_server
+    log {
+        output file /var/log/caddy/access.log
+    }
+}
