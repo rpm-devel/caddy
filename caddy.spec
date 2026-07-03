@@ -1,7 +1,7 @@
-%global xcaddy_version 0.4.4
+%global xcaddy_version 0.4.5
 
 Name:           caddy
-Version:        2.11.2
+Version:        2.11.4
 Release:        1%{?dist}
 Summary:        Powerful, enterprise-ready, open source web server with automatic HTTPS
 License:        Apache-2.0
@@ -21,6 +21,8 @@ BuildRequires:  golang >= 1.17
 BuildRequires:  golang >= 1.22
 %endif
 BuildRequires:  systemd-rpm-macros
+Requires(pre):  shadow-utils
+%{?systemd_requires}
 Provides:       webserver
 
 %description
@@ -139,6 +141,11 @@ exit 0
 %{_bindir}/xcaddy
 
 %changelog
+* Thu Jul 03 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 2.11.4-1
+- Version: 2.11.2 → 2.11.4; xcaddy: 0.4.4 → 0.4.5
+- Source0/Source10: GitHub archive URLs verified (200)
+- ExclusiveArch: x86_64 aarch64; systemd-rpm-macros
+
 * Thu Apr 24 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 2.11.2-1
 - Complete rewrite for Caddy v2
 - Add xcaddy subpackage for custom builds
