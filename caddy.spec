@@ -12,6 +12,13 @@ Source2:        Caddyfile
 Source3:        default-web-pages.tar.gz
 
 ExclusiveArch:  x86_64 aarch64
+
+%if 0%{?suse_version}
+%global shadow_pkg shadow
+%else
+%global shadow_pkg shadow-utils
+%endif
+
 # EL7 ships Go 1.x which is too old for Caddy 2.x (requires Go 1.22+).
 # Caddy 2.x cannot be built on EL7; use the pre-built binary or a newer
 # Go toolchain from a third-party repo (e.g. golang-1.22 from COPR).
@@ -21,7 +28,7 @@ BuildRequires:  golang >= 1.17
 BuildRequires:  golang >= 1.22
 %endif
 BuildRequires:  systemd-rpm-macros
-Requires(pre):  shadow-utils
+Requires(pre):  %{shadow_pkg}
 %{?systemd_requires}
 Provides:       webserver
 
@@ -141,6 +148,11 @@ exit 0
 %{_bindir}/xcaddy
 
 %changelog
+* Sat Jul 05 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 2.11.4-1
+- Multi-distro pass: guard Requires(pre) shadow-utils/shadow via
+  %{shadow_pkg} (shadow-utils on RHEL/Fedora, shadow on openSUSE/SLES)
+- No other distro-specific naming or noarch issues found
+
 * Thu Jul 03 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 2.11.4-1
 - Version: 2.11.2 → 2.11.4; xcaddy: 0.4.4 → 0.4.5
 - Source0/Source10: GitHub archive URLs verified (200)
